@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="./lib/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./lib/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="./src/wct.css"/>
+</head>
+
+<body>
+<br>
+
+<div class="container">
+
+    <div class="modal fade" id="ModalConsent" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-content">
+            <div class="modal-footer">
+                <div style="display: flex; justify-content: space-between;">
+                    <div>This website uses cookie to store user settings. <a href="https://cookiesandyou.com/">Learn more</a></div>
+                    <button id="dismiss" type="button" class="btn btn-default" data-dismiss="modal">Got it!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <div class="row content">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+
+            <div class="panel-group" id="accordion">
+
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#pickgeo">
+                                Settings</a>
+                        </h4>
+                    </div>
+                    
+                    <div id="pickgeo" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <form id="pick">
+                                <div style="display: flex; justify-content: space-around;">
+                                    <div>
+                                        <label>Pick a location from map:</label><br />
+                                        <input name="latlnginput" type="text" value="35,139" />
+                                    </div>
+                                    <div>
+                                        <label>UTC offset:</label><br />
+                                        <input name="offset" type="number"  min="-12" max="12" value="9.0" step="0.25" />
+                                    </div>
+                                    <div>
+                                        <label>Time zone:</label><br />             
+                                        <div id='timezone' class='text-center'>test</div>
+                                    </div>
+                                </div><br />
+
+                                <div id="geolocs" style="height: 200px"></div>
+
+                                <div style="display: flex; justify-content: space-around;">
+                                    <div><label>12h:</label><input name="t12h" type="checkbox" onchange="drawClock()" /></div>
+                                    <div><label>Analog:</label><input name="analog" type="checkbox" onchange="drawClock()" /></div>
+                                    <div><label>Show favicon canvas:</label><input name="bigicon" type="checkbox" onchange="drawClock()" /></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                
+                </div>
+                
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#About">
+                            About</a>
+                        </h4>
+                    </div>
+                    <div id="About" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <p>Favicon world clock inspired by <a href="http://www.clocktab.com/">clocktab.com</a>.
+                             
+                            Free and open sourced (<a href="https://github.com/i-namekawa/WorldClockTab">GitHub</a>).
+                            Made with <strong>no google</strong> service (No ads/tracking. Only cookie for settings).
+                            Once loaded, everything other than openstreetmap should work online.</p>
+
+                            <h3>How to use</h3>
+                            <p>Click on the map to pick a timezone. UTC offset and sunrise/sunset times will be automatically caliculated.
+                            UTC offset and latitude/longitude can be manually set in the input boxes.</p>
+                            <p>With the three checkboxes, you can toggle between 12-hr/24-hr, digital/analog clock, and show/hide favicon canvas. 
+                            After you're done with settings, just pin the tab!</p>
+                            <p>Background images for website and favicon will change according to the time of day (dawn, day, dusk, night).
+                            Note that twilight duration (dusk/dawn) is fixed to 60 min.</p>
+                            <p>If you need multiple cities, just fire up more tabs!</p>
+
+                            <h3>Acknowledgement</h3>
+                            Favicon world clock is powered by:
+                            <ul>
+                                <li>JQuery</li>
+                                <li>bootstrap</li>
+                                <li><a href="https://leafletjs.com/">leafletjs.com</a> (for emmbedding the interactive map)</li>
+                                <li><a href="https://openstreetmap.org/">www.openstreetmap.org</a> (map tile data)</li>
+                                <li><a href="https://github.com/darkskyapp/tz-lookup/">tz.js by darkskyapp</a> (timezone look up from lat/lng)</li>
+                                <li><a href="https://www.geonames.org/">www.geonames.org</a> (time zone Id and UCT offset data)</li>
+                                <li><a href="https://github.com/dj0001/Leaflet.Sun ">Leaflet.Sun plugin by dj0001</a> (for sunrise/sunset time calculation)</li>
+                                <li><a href="https://www.reshot.com/">www.reshot.com</a> (background images)</li>
+                            </ul>                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+                
+            <div style="display: flex; justify-content: space-around;">
+                <div><label style="color: #cccc00";>Sunrise:</label><br /><div id='Sunrise' class="well">00:00</div></div>
+                <div id='textclock' style="font-size:36px; width:50%" class="well text-center"></div>
+                <div><label style="color: #cccc00";>Sunset:</label><br /><div id='Sunset' class="well">00:00</div></div>
+            </div>
+
+            <center>
+                <canvas id="myCanvas" width="64" class="well well-sm" height="64"></canvas>
+            </center>
+
+        </div>
+        <div class="col-sm-2"></div>
+
+    </div>
+
+</div>
+
+<div id="photoCredit" style="color: #cccc00; position:absolute; bottom: 0px; right: 0px"></div>
+
+
+<script src="./lib/jquery-3.3.1.min.js"></script>
+<script src="./lib/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="./lib/leaflet/leaflet.js"></script>
+<script src="./lib/L.Sun.js"/></script> <!-- Leaflet plugin by dj0001 https://github.com/dj0001/Leaflet.Sun -->
+
+<script src="./lib/tz/tz.js"/></script> <!-- timezone lookup from latlng by darkskyapp https://github.com/darkskyapp/tz-lookup/ -->
+<script src="./lib/geonames/timeZones.json"/></script> <!-- time zone data from geonames.org -->
+<script src="./src/wct.js"/></script> <!-- my script -->
+
+</body>
+</html>
