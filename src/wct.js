@@ -152,7 +152,7 @@ function drawClock() {
     mintext = m;
     // apply 12-hour if checked
     var ampm = '';
-    if (t12h & h >= 12) {
+    if (t12h && h >= 12) {
         hourtext = h - 12;
         ampm = ' PM';
     } else if (t12h) {
@@ -259,17 +259,17 @@ function onMapClick(e) {
         lat = e.latlng.lat,
         lng = e.latlng.lng;
     
+    if (Math.abs(lat) > 71.4) {
+        alert('latitude beyond 71.4 not supported')
+        return
+    }
+
     // convert leaflet.js lng within bound
-    if(lng <= -180.0) { lng += 360.0; }
-    if(lng >= 180.0) { lng -= 360.0; }
-    
+    if(lng <= -180.0) {lng += 360.0;}
+    if(lng >= 180.0) {lng -= 360.0;}
     $('[name=latlnginput]').val( lat.toString().slice(0,12) + ', ' + lng.toString().slice(0,12) )
 
-    if (Math.abs(lat) > 71.4) alert('latitude beyond 71.4 not supported')
-    
-
     tz = tzlookup(lat, lng)
-
     if (tz in data) {
         // DST offset 1. Jul 2018 or not
         if (T.getMonth() >= 6) {  // zero-indexed! 0 -11
@@ -279,8 +279,7 @@ function onMapClick(e) {
         }
         $('[name=offset]').val( td )
         var sunset = sun(lat,lng,T,1,td),
-        sunrise = sun(lat,lng,T,-1,td);
-
+            sunrise = sun(lat,lng,T,-1,td);
         $('#Sunrise').text(sunrise)
         $('#Sunset').text(sunset)
         $('#timezone').text(tz)
