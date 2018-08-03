@@ -263,7 +263,10 @@ function onMapClick(e) {
     if(lng <= -180.0) { lng += 360.0; }
     if(lng >= 180.0) { lng -= 360.0; }
     
-    $('[name=latlnginput]').val( lat + ',' + lng )
+    $('[name=latlnginput]').val( lat.toString().slice(0,12) + ', ' + lng.toString().slice(0,12) )
+
+    if (Math.abs(lat) > 71.4) alert('latitude beyond 71.4 not supported')
+    
 
     tz = tzlookup(lat, lng)
 
