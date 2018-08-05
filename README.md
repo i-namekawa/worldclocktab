@@ -1,32 +1,30 @@
-Favicon world clock is inspired by <a href="http://www.clocktab.com/">clocktab.com</a>, with UTC offset and digital/analog clock support.
+Favicon world clock is inspired by [clocktab.com](http://www.clocktab.com/), with UTC offset and digital/analog clock support.
 
-<a href="https://i-namekawa.github.io/worldclocktab/">See it in action at github page!</a>
+[Demo](https://i-namekawa.github.io/worldclocktab/)
 
+Made with no google service (No ads/tracking. Only cookie for settings).
 
-Made with <strong>no google</strong> service (No ads/tracking. Only cookie for settings).
-Once loaded, everything other than openstreetmap should work online.</p>
+## How to use
+Click on the map to pick a timezone. UTC offset and sunrise/sunset times will be automatically calculated.
+With the checkboxes, you can toggle between 12-hr/24-hr, digital/analog clock, show/hide favicon canvas, 
+and on/off API call to sunrise-sunset.org for more accurate dawn/dusk calculation.
+After you're done with settings, just pin the tab!
+Background images for website and favicon will change according to the time of day (dawn, day, dusk, night).
+When sunrise-sunset.org API call is turned off, twilight duration is fixed to 60 min.
+If you need multiple cities, just fire up more tabs!
+Once loaded, you can still use this site offline. All you need to do is to turn off API call to sunrise-sunset.org 
+and set the latitude/longitude manually in the input fields. UCT offset/sunrise/sunset times will be automatically updated.
+However, the estimation of senset/sunrise/dawn/dusk may not be accurate for the arctic circle.
 
-<h3>How to use</h3>
-<p>Click on the map to pick a timezone. UTC offset and sunrise/sunset times will be automatically caliculated.
-UTC offset and latitude/longitude can be manually set in the input boxes (useful when choosing a new location offline).</p>
-<p>With the three checkboxes, you can toggle between 12-hr/24-hr, digital/analog clock, and show/hide favicon canvas. 
-After you're done with settings, just pin the tab!</p>
-<p>Background images for website and favicon will change according to the time of day (dawn, day, dusk, night).
-Note that twilight duration (dusk/dawn) is fixed to 60 min.</p>
-<p>If you need multiple cities, just fire up more tabs!</p>
+## Acknowledgement
 
-<h3>Acknowledgement</h3>
 Favicon world clock is powered by:
-<ul>
-    <li>JQuery</li>
-    <li>bootstrap</li>
-    <li><a href="https://leafletjs.com/">leafletjs.com</a> (for emmbedding the interactive map)</li>
-    <li><a href="https://openstreetmap.org/">www.openstreetmap.org</a> (map tile data)</li>
-    <li><a href="https://github.com/darkskyapp/tz-lookup/">tz.js by darkskyapp</a> (timezone look up from lat/lng)</li>
-    <li><a href="https://www.geonames.org/">www.geonames.org</a> (time zone Id and UCT offset data)</li>
-    <li><a href="https://github.com/dj0001/Leaflet.Sun ">Leaflet.Sun plugin by dj0001</a> (for sunrise/sunset time calculation)</li>
-    <li><a href="https://www.reshot.com/">www.reshot.com</a> (background images)</li>
-</ul>                            
-
-
-
+- JQuery
+- bootstrap
+- [leafletjs.com](https://leafletjs.com/) for emmbedding the interactive map
+- [www.openstreetmap.org](https://openstreetmap.org/) for map tile data
+- [tz.js by darkskyapp](https://github.com/darkskyapp/tz-lookup/) for timezone look up from lat/lng
+- [www.geonames.org](https://www.geonames.org/) for time zone Id and UCT offset data
+- [Leaflet.Sun plugin by dj0001](https://github.com/dj0001/Leaflet.Sun) for offline sunrise/sunset time calculation
+- [sunrise-sunset.org](https://sunrise-sunset.org/) for sunrise/sunset/dawn/dusk
+- [www.reshot.com](https://www.reshot.com/) for background images
