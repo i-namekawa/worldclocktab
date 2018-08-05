@@ -140,7 +140,7 @@ function drawClock() {
         body.style.backgroundImage = "url('img/333d6298-02c8-4b2c-af9f-c6d8317f409e.jpg')";
         photoCredit.html('Photo by <a href="https://www.reshot.com/photos/rowboat_rs_3ayJjy">Tom Beckermann</a> on <a href="https://www.reshot.com">Reshot</a>')
     // dusk 
-    } else if (minset <= mins && mins < mindusk) {
+    } else if (minset <= mins && mins < mindusk || dw == 'white nights') {
         grd.addColorStop(0,"orange");
         grd.addColorStop(1,"lightblue");
         ctx.globalAlpha=0.2;
