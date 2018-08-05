@@ -1,4 +1,4 @@
-Favicon world clock is inspired by [clocktab.com](http://www.clocktab.com/), with UTC offset and digital/analog clock support.
+World clock tab is totally inspired by [clocktab.com](http://www.clocktab.com/), with UTC offset and digital/analog clock support.
 
 [Demo site](https://i-namekawa.github.io/worldclocktab/)
 
@@ -22,7 +22,7 @@ However, the estimation of senset/sunrise/dawn/dusk may not be accurate for the 
 
 ## Acknowledgement
 
-Favicon world clock is powered by:
+World clock tab is powered by:
 - JQuery
 - bootstrap
 - [leafletjs.com](https://leafletjs.com/) for emmbedding the interactive map
