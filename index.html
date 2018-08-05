@@ -26,8 +26,8 @@
     </div>
         
     <div class="row content">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
 
             <div class="panel-group" id="accordion">
 
@@ -43,7 +43,7 @@
                     <div id="pickgeo" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <form id="pick">
-                                <div style="display: flex; justify-content: space-around;">
+                                <div style="display: flex; justify-content: space-between;">
                                     <div>
                                         <label>Pick a location from map:</label><br />
                                         <input name="latlnginput" type="text" value="35,139" />
@@ -61,9 +61,10 @@
                                 <div id="geolocs" style="height: 200px"></div>
 
                                 <div style="display: flex; justify-content: space-around;">
-                                    <div><label>12h:</label><input name="t12h" type="checkbox" onchange="drawClock()" /></div>
+                                    <div><label>12h:</label><input name="t12h" type="checkbox" onchange="emurate_mapclick()" /></div>
                                     <div><label>Analog:</label><input name="analog" type="checkbox" onchange="drawClock()" /></div>
-                                    <div><label>Show favicon canvas:</label><input name="bigicon" type="checkbox" onchange="drawClock()" /></div>
+                                    <div><label>Favicon canvas:</label><input name="bigicon" type="checkbox" onchange="drawClock()" /></div>
+                                    <div><label>sunrise-sunset.org:</label><input name="ssAPI" type="checkbox" onchange="drawClock()" /></div>
                                 </div>
                             </form>
                         </div>
@@ -83,17 +84,21 @@
                             <p>Favicon world clock inspired by <a href="http://www.clocktab.com/">clocktab.com</a>.
                              
                             Free and open sourced (<a href="https://github.com/i-namekawa/WorldClockTab">GitHub</a>).
-                            Made with <strong>no google</strong> service (No ads/tracking. Only cookie for settings).
-                            Once loaded, everything other than openstreetmap should work online.</p>
+                            Made with no google service (No ads/tracking. Only cookie for settings).
+                            </p>
 
                             <h3>How to use</h3>
-                            <p>Click on the map to pick a timezone. UTC offset and sunrise/sunset times will be automatically caliculated (as long as latitude is within +/-71.4 degrees).
-                            UTC offset and latitude/longitude can be manually set in the input boxes.</p>
-                            <p>With the three checkboxes, you can toggle between 12-hr/24-hr, digital/analog clock, and show/hide favicon canvas. 
+                            <p>Click on the map to pick a timezone. UTC offset and sunrise/sunset times will be 
+                                automatically caliculated (as long as latitude is within +/-71.4 degrees).
+                            </p>
+                            <p>With the checkboxes, you can toggle between 12-hr/24-hr, digital/analog clock, show/hide favicon canvas, 
+                                and on/off API call to sunrise-sunset.org for dawn/dusk calculation.
                             After you're done with settings, just pin the tab!</p>
                             <p>Background images for website and favicon will change according to the time of day (dawn, day, dusk, night).
-                            Note that twilight duration (dusk/dawn) is fixed to 60 min.</p>
+                            When sunrise-sunset.org API call is turned off, twilight duration is fixed to 60 min.</p>
                             <p>If you need multiple cities, just fire up more tabs!</p>
+                            <p>Once the page is loaded, you can use this offline. All you need to know is the latitude/longitude which
+                                can be set manually in the input boxes. UCT offset/sunrise/sunset times will be updated automatically.</p>
 
                             <h3>Acknowledgement</h3>
                             Favicon world clock is powered by:
@@ -104,7 +109,8 @@
                                 <li><a href="https://openstreetmap.org/">www.openstreetmap.org</a> (map tile data)</li>
                                 <li><a href="https://github.com/darkskyapp/tz-lookup/">tz.js by darkskyapp</a> (timezone look up from lat/lng)</li>
                                 <li><a href="https://www.geonames.org/">www.geonames.org</a> (time zone Id and UCT offset data)</li>
-                                <li><a href="https://github.com/dj0001/Leaflet.Sun ">Leaflet.Sun plugin by dj0001</a> (for sunrise/sunset time calculation)</li>
+                                <li><a href="https://github.com/dj0001/Leaflet.Sun ">Leaflet.Sun plugin by dj0001</a> (for offline sunrise/sunset time calculation)</li>
+                                <li><a href="https://sunrise-sunset.org/">sunrise-sunset.org</a> (for sunrise/sunset/dawn/dusk)</li>
                                 <li><a href="https://www.reshot.com/">www.reshot.com</a> (background images)</li>
                             </ul>                            
                         </div>
@@ -112,11 +118,13 @@
                 </div>
 
             </div>
-                
+            
             <div style="display: flex; justify-content: space-around;">
-                <div><label style="color: #cccc00";>Sunrise:</label><br /><div id='Sunrise' class="well">00:00</div></div>
-                <div id='textclock' style="font-size:36px; width:50%" class="well text-center"></div>
-                <div><label style="color: #cccc00";>Sunset:</label><br /><div id='Sunset' class="well">00:00</div></div>
+                <div><label style="color: #cccc00";>Dawn:</label><br /><div id='Dawn' class="well well-sm">00:00</div></div>
+                <div><label style="color: #cccc00";>Sunrise:</label><br /><div id='Sunrise' class="well well-sm">00:00</div></div>
+                <div id='textclock' style="font-size:36px; width:50%" class="well well-sm text-center"></div>
+                <div><label style="color: #cccc00";>Sunset:</label><br /><div id='Sunset' class="well well-sm">00:00</div></div>
+                <div><label style="color: #cccc00";>Dusk:</label><br /><div id='Dusk' class="well well-sm">00:00</div></div>
             </div>
 
             <center>
@@ -124,7 +132,7 @@
             </center>
 
         </div>
-        <div class="col-sm-2"></div>
+        <div class="col-sm-1"></div>
 
     </div>
 
