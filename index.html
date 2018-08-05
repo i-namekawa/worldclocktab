@@ -88,17 +88,18 @@
                             </p>
 
                             <h3>How to use</h3>
-                            <p>Click on the map to pick a timezone. UTC offset and sunrise/sunset times will be 
-                                automatically caliculated (as long as latitude is within +/-71.4 degrees).
-                            </p>
+                            <p>Click on the map to pick a timezone. UTC offset and sunrise/sunset times will be automatically calculated.</p>
                             <p>With the checkboxes, you can toggle between 12-hr/24-hr, digital/analog clock, show/hide favicon canvas, 
-                                and on/off API call to sunrise-sunset.org for dawn/dusk calculation.
+                                and on/off API call to sunrise-sunset.org for more accurate dawn/dusk calculation.
                             After you're done with settings, just pin the tab!</p>
                             <p>Background images for website and favicon will change according to the time of day (dawn, day, dusk, night).
                             When sunrise-sunset.org API call is turned off, twilight duration is fixed to 60 min.</p>
                             <p>If you need multiple cities, just fire up more tabs!</p>
-                            <p>Once the page is loaded, you can use this offline. All you need to know is the latitude/longitude which
-                                can be set manually in the input boxes. UCT offset/sunrise/sunset times will be updated automatically.</p>
+                            <p>Once loaded, you can still use this site offline. All you need to do is to turn off API call to sunrise-sunset.org 
+                                and set the latitude/longitude manually in the input fields. UCT offset/sunrise/sunset times will be automatically updated.
+                                However, the estimation of senset/sunrise/dawn/dusk may not be accurate for the arctic circle.
+                            </p>
+
 
                             <h3>Acknowledgement</h3>
                             Favicon world clock is powered by:
@@ -135,6 +136,8 @@
         <div class="col-sm-1"></div>
 
     </div>
+
+    <div id='warning'></div>
 
 </div>
 

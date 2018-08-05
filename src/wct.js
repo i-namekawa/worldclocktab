@@ -137,7 +137,7 @@ function drawClock() {
         body.style.backgroundImage = "url('img/9eaa2333-cab0-42b0-8982-c7de58764440.jpg')";
         photoCredit.html('Photo by <a href="https://www.reshot.com/photos/i-wanna-wake-up-to-this-view-everyday_rs_Al0nk0">Nevi Egwandini</a> on <a href="https://www.reshot.com">Reshot</a>')
     // day
-    } else if (minrise <= mins && mins < minset) {    
+    } else if (minrise <= mins && mins < minset || sr == 'midnight sun') {    
         grd.addColorStop(0,"#eeeeee");
         grd.addColorStop(1,"lightblue");
         ctx.globalAlpha=0.3;
@@ -293,11 +293,6 @@ function onMapClick(e) {
         ssAPI = $('[name=ssAPI]')[0].checked,
         t12h = $('[name=t12h]')[0].checked;
     
-    if (Math.abs(lat) > 71.4) {
-        alert('latitude beyond +/-71.4 not supported')
-        return
-    }
-
     // convert leaflet.js lng within bound
     if(lng <= -180.0) {lng += 360.0;}
     if(lng >= 180.0) {lng -= 360.0;}
@@ -330,19 +325,20 @@ function onMapClick(e) {
                     dw = dawn.split(':');
                     dk = dusk.split(':');
                     
-                    // ampm?
-                    if (t12h) {
-                        sunrise = addampm(sr[0], sr[1])
-                        sunset = addampm(ss[0], ss[1])
-                    }
-                    
-                    if (parsed.nautical_twilight_begin.slice(0,4)=='1970' && lat>60) {
-                        dawn = 'white nights';
-                        dusk = 'white nights';
-                        dw = dawn;
-                        dk = dusk;
+                    // for south hemisphere, max valid input would be around -55, so far away from antarctic circle.
+                    // we'll take care of north hemisphere exceptions only
+                    if (parsed.sunrise.slice(0,4)=='1970' && lat>60) {
+                        sunrise = sr = 'midnight sun';
+                        sunset = ss = 'midnight sun';
+                        dawn = dw = 'midnight sun';
+                        dusk = dk = 'midnight sun';
+                    } else if (parsed.nautical_twilight_begin.slice(0,4)=='1970' && lat>60) {
+                        dawn = dw = 'white nights';
+                        dusk = dk = 'white nights';
                     } else if (t12h) {
                         dawn = addampm(dw[0], dw[1])
+                        sunrise = addampm(sr[0], sr[1])
+                        sunset = addampm(ss[0], ss[1])
                         dusk = addampm(dk[0], dk[1])
                     }
 
@@ -359,27 +355,44 @@ function onMapClick(e) {
 
         } else {  // no API call ver (e.g. offline)
             var sunset = sun(lat,lng,T,1,td), // sun return 24h format hour
-                sunrise = sun(lat,lng,T,-1,td),
-                h1 = parseInt(sunrise.split(':')[0]),
-                m1 = sunrise.split(':')[1],
-                h2 = parseInt(sunset.split(':')[0]),
-                m2 = sunset.split(':')[1],
-                dawn = h1-1 + ":" + m1,
-                dusk = h2+1 + ":" + m2;
-            
-            // update global vars in 24 hour format
-            sr = sunrise.split(':');
-            ss = sunset.split(':');
-            dw = dawn.split(':');
-            dk = dusk.split(':');
-
-            t12h = $('[name=t12h]')[0].checked
-            if (t12h) {
-                dawn = addampm(h1-1, m1);
-                sunrise = addampm(h1, m1);
-                sunset = addampm(h2,m2);
-                dusk = addampm(h2+1,m2);
+                sunrise = sun(lat,lng,T,-1,td);
+        
+            if (lat>60) {
+                $('#warning').html('<div class="alert alert-warning alert-dismissible">\
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Warning!</strong>\
+                 Sunrise/sunset/dawn/dusk estimation might not be accurate near arctic circle.</div>')
+            } else {
+                $('.close').alert('close');
             }
+
+            if (sunrise == "NaN:aN" && lat>60) {
+                sunrise = sr = 'midnight sun';
+                sunset = ss = 'midnight sun';
+                dawn = dw = 'midnight sun';
+                dusk = dk = 'midnight sun';
+            } else {
+                var h1 = parseInt(sunrise.split(':')[0]),
+                    m1 = sunrise.split(':')[1],
+                    h2 = parseInt(sunset.split(':')[0]),
+                    m2 = sunset.split(':')[1],
+                    dawn = h1-1 + ":" + m1,
+                    dusk = h2+1 + ":" + m2;
+                
+                // update global vars in 24 hour format
+                sr = sunrise.split(':');
+                ss = sunset.split(':');
+                dw = dawn.split(':');
+                dk = dusk.split(':');
+    
+                t12h = $('[name=t12h]')[0].checked
+                if (t12h) {
+                    dawn = addampm(h1-1, m1);
+                    sunrise = addampm(h1, m1);
+                    sunset = addampm(h2,m2);
+                    dusk = addampm(h2+1,m2);
+                }
+            }
+            
             $('#Dawn').text(dawn)
             $('#Sunrise').text(sunrise)
             $('#Sunset').text(sunset)
@@ -425,6 +438,7 @@ $(document).ready( function() {
         });
         $("#ModalConsent").modal('show');
     }
+    applyCookie();
 
     // set up event handlers
     $("#pickgeo").on("hide.bs.collapse", function(){
@@ -459,7 +473,6 @@ $(document).ready( function() {
     }).addTo(mymap);
     mymap.on('click', onMapClick);
     
-    applyCookie();
     // update sun set/rise/dawn/dusk by emurating a click on map
     emurate_mapclick();
 
