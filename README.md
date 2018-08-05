@@ -1,17 +1,21 @@
 Favicon world clock is inspired by [clocktab.com](http://www.clocktab.com/), with UTC offset and digital/analog clock support.
 
-[Demo](https://i-namekawa.github.io/worldclocktab/)
+[Demo site](https://i-namekawa.github.io/worldclocktab/)
 
 Made with no google service (No ads/tracking. Only cookie for settings).
 
 ## How to use
+
 Click on the map to pick a timezone. UTC offset and sunrise/sunset times will be automatically calculated.
+
 With the checkboxes, you can toggle between 12-hr/24-hr, digital/analog clock, show/hide favicon canvas, 
 and on/off API call to sunrise-sunset.org for more accurate dawn/dusk calculation.
 After you're done with settings, just pin the tab!
+
 Background images for website and favicon will change according to the time of day (dawn, day, dusk, night).
 When sunrise-sunset.org API call is turned off, twilight duration is fixed to 60 min.
 If you need multiple cities, just fire up more tabs!
+
 Once loaded, you can still use this site offline. All you need to do is to turn off API call to sunrise-sunset.org 
 and set the latitude/longitude manually in the input fields. UCT offset/sunrise/sunset times will be automatically updated.
 However, the estimation of senset/sunrise/dawn/dusk may not be accurate for the arctic circle.
