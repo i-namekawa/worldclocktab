@@ -31,6 +31,10 @@ function applyCookie() {
     if (td.length>0) {
         $('[name=offset]').val(td);
     }
+    var ll = getCookie("latlng");
+    if (ll.length>0) {
+        $('#pick input').val(ll);
+    }
     var t12h = getCookie("t12h");
     if (t12h == "true") {
         $('[name=t12h]')[0].checked = true;
@@ -387,6 +391,7 @@ function onMapClick(e) {
     } else {
         alert('Time Zone {0} not found'.replace('{0}', tz))
     }
+    setCookie('latlng', $('#pick input').val() ,30)
 
 }
 
@@ -420,7 +425,6 @@ $(document).ready( function() {
         });
         $("#ModalConsent").modal('show');
     }
-    applyCookie();
 
     // set up event handlers
     $("#pickgeo").on("hide.bs.collapse", function(){
@@ -455,6 +459,7 @@ $(document).ready( function() {
     }).addTo(mymap);
     mymap.on('click', onMapClick);
     
+    applyCookie();
     // update sun set/rise/dawn/dusk by emurating a click on map
     emurate_mapclick();
 
