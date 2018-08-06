@@ -148,8 +148,8 @@ function drawClock() {
         grd.addColorStop(0,"orange");
         grd.addColorStop(1,"lightblue");
         ctx.globalAlpha=0.2;
-        body.style.backgroundImage = "url('img/2810e69e-c8ae-43e2-895b-835622a1460e.jpg')";
-        photoCredit.html('Photo by <a href="https://www.reshot.com/photos/corsica_rs_29zLR0">Suzana ☀️🍀💋🐠🌴🎏🌸</a> on <a href="https://www.reshot.com">Reshot</a>')
+        body.style.backgroundImage = "url('img/4df855c7-676b-4740-a51f-8f2615c2ba19.jpg')";
+        photoCredit.html('Photo by <a href="https://www.reshot.com/photos/hilton-head_rs_BABw8r">Photo by Adam Woleslagle</a> on <a href="https://www.reshot.com">Reshot</a>')
     // night
     } else {
         grd.addColorStop(0,"#545457");
